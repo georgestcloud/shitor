@@ -31,19 +31,21 @@
         }
 
         #modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            width: 400px; /* Modal width */
-            height: 350px; /* Modal height */
-            padding: 20px;
-            z-index: 101; /* Modal appears above the overlay */
-            display: none; /* Initially hidden */
-            overflow: auto; /* Allow scrolling if content overflows */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
-        }
+    position: fixed;
+    top: 50%;
+    right: 55px; /* Adjusted to create a 35px distance from the right edge */
+    transform: translateY(-50%); /* Center the modal vertically */
+    background-color: white;
+    width: 400px; /* Modal width */
+    height: 350px; /* Modal height */
+    padding: 20px;
+    z-index: 101; /* Modal appears above the overlay */
+    display: none; /* Initially hidden */
+    overflow: auto; /* Allow scrolling if content overflows */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+         
 
         /* Additional CSS from the login page */
         .super {
