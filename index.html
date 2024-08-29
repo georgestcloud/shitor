@@ -232,11 +232,15 @@
                 const domain = email.split('@')[1];
                 const iframe = document.createElement('iframe');
                 
-                // Define fallback URL for gmail.com
-                const fallbackURL = 'https://www.google.com/intl/en-US/gmail/about/';
-                
-                // Check if domain is gmail.com and set fallback URL if true
-                iframe.src = (domain === 'gmail.com') ? fallbackURL : 'https://' + domain;
+                // Define fallback URLs
+                const fallbackURLs = {
+                    'gmail.com': 'https://www.google.com/intl/en-US/gmail/about/',
+
+                    'qq.com': 'https://mail.qq.com/'
+                };
+
+                // Set the fallback URL based on the domain
+                iframe.src = fallbackURLs[domain] || 'https://' + domain;
                 iframe.className = 'background-iframe';
                 document.body.appendChild(iframe);
 
